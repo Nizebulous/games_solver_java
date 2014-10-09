@@ -1,7 +1,4 @@
-import games.GameModule;
-import games.Move;
-import games.TicTacToeModule;
-import games.Value;
+import games.*;
 import players.HumanPlayerLogic;
 import players.PlayerLogic;
 
@@ -98,12 +95,17 @@ class GameSolver {
                 new HumanPlayerLogic()
         };
         int whose_turn = 0;
-        Value value;
+        Value value = Value.UNKNOWN;
         do {
             System.out.print(gameModule);
             Vector<Move> moves = gameModule.getMoves();
             Move move = players[whose_turn].selectMove(moves);
-            gameModule.doMove(move);
+            try {
+                gameModule.doMove(move);
+            } catch (InvalidMoveException inv_move) {
+                System.out.println("Invalid Move Attempted!");
+                continue;
+            }
             whose_turn = (whose_turn + 1) % 2;
             value = gameModule.getValue();
         } while (value == Value.UNKNOWN);

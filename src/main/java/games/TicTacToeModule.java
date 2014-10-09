@@ -10,7 +10,7 @@ public class TicTacToeModule implements GameModule {
             player_one,
             player_two
     };
-    private char[][] board = {
+    private final char[][] board = {
             {empty, empty, empty},
             {empty, empty, empty},
             {empty, empty, empty}
@@ -28,8 +28,11 @@ public class TicTacToeModule implements GameModule {
         return moves;
     }
 
-    public void doMove(Move move) {
+    public void doMove(Move move) throws InvalidMoveException {
         TicTacToeMove myMove = (TicTacToeMove)move;
+        if (myMove.x >= board.length || myMove.y >= board[myMove.x].length || board[myMove.x][myMove.y] != empty) {
+            throw new InvalidMoveException();
+        }
         board[myMove.x][myMove.y] = players[getPlayerIndex()];
     }
 
@@ -38,8 +41,6 @@ public class TicTacToeModule implements GameModule {
         // So we get the current player, then get the other player
         // and get their piece
         char matching_piece = players[(getPlayerIndex() + 1) % 2];
-        System.out.println(getPlayerIndex());
-        System.out.println(matching_piece);
         boolean empty_seen = false;
         // rows
         for (int i = 0; i < 3; i++) {
@@ -124,6 +125,10 @@ class TicTacToeMove extends Move {
     public TicTacToeMove(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public boolean equals(Object move) {
+        return (move instanceof TicTacToeMove && x == ((TicTacToeMove) move).x && y == ((TicTacToeMove) move).y);
     }
 
     public String toString() {
