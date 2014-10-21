@@ -8,9 +8,6 @@ import java.io.InputStreamReader;
 import java.util.Vector;
 
 class GameSolver {
-    private enum Game {
-        TicTacToe
-    }
     private enum Action {
         solve,
         play

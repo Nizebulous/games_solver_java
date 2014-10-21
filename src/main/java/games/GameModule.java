@@ -10,6 +10,7 @@ public interface GameModule {
     public abstract void doMove(Move move) throws InvalidMoveException;
     public abstract Value getValue();
     public abstract String toString();
+
 }
 
 
