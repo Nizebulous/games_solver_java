@@ -13,14 +13,14 @@ public class TicTacToeModuleTest {
         Vector<Move> moves = ttt_module.getMoves();
         Assert.assertEquals(moves.size(), 9);
         TicTacToeMove first_move = (TicTacToeMove) moves.firstElement();
-        ttt_module.doMove(first_move);
+        ttt_module = (TicTacToeModule) ttt_module.doMove(first_move);
         moves = ttt_module.getMoves();
         for (Move move : moves) {
             Assert.assertNotEquals(first_move, move);
         }
         Assert.assertEquals(moves.size(), 8);
         for (Move move : moves) {
-            ttt_module.doMove(move);
+            ttt_module = (TicTacToeModule) ttt_module.doMove(move);
         }
         moves = ttt_module.getMoves();
         Assert.assertEquals(moves.size(), 0);
@@ -35,7 +35,7 @@ public class TicTacToeModuleTest {
     @Test(expected = InvalidMoveException.class)
     public void testAlreadyFilledMove() throws Exception {
         TicTacToeModule ttt_module = new TicTacToeModule();
-        ttt_module.doMove(new TicTacToeMove(0, 0));
+        ttt_module = (TicTacToeModule) ttt_module.doMove(new TicTacToeMove(0, 0));
         ttt_module.doMove(new TicTacToeMove(0, 0));
     }
 
@@ -46,16 +46,18 @@ public class TicTacToeModuleTest {
         Assert.assertEquals(value, Value.UNKNOWN);
         Vector<Move> moves = ttt_module.getMoves();
         for (Move move : moves) {
-            ttt_module.doMove(move);
+            ttt_module = (TicTacToeModule) ttt_module.doMove(move);
         }
         value = ttt_module.getValue();
         Assert.assertEquals(value, Value.LOSS);
     }
 
     @Test
-    public void testEquals() throws Exception {
-        TicTacToeMove move_one = new TicTacToeMove(1, 1);
-        TicTacToeMove move_two = new TicTacToeMove(1, 1);
-        Assert.assertEquals(move_one, move_two);
+    public void testEqual() throws Exception {
+        TicTacToeModule ttt_one = new TicTacToeModule();
+        TicTacToeModule ttt_two = new TicTacToeModule();
+        Assert.assertEquals(ttt_one, ttt_two);
     }
+
 }
+

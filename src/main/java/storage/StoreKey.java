@@ -5,8 +5,6 @@ package storage;
  */
 public interface StoreKey {
 
-    public abstract long getHash();
-
     public abstract int hashCode();
 
     public abstract boolean equals(Object obj);

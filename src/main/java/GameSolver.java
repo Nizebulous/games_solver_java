@@ -1,4 +1,5 @@
 import games.*;
+import players.ComputerPlayerLogic;
 import players.HumanPlayerLogic;
 import players.PlayerLogic;
 
@@ -18,11 +19,10 @@ class GameSolver {
 
     public static void main(String[] args) {
         System.out.println("Welcome to the Java Game Solver!");
-        GameModule gameModule = promptGameModule();
-        gameMenu(gameModule);
+        gameMenu(promptGameModule());
 	}
 
-    private static GameModule promptGameModule() {
+    private static Class<? extends GameModule> promptGameModule() {
         System.out.println("Here are the available games:");
         for (Game g : Game.values()) {
             System.out.println(g.toString());
@@ -36,13 +36,13 @@ class GameSolver {
             System.out.println("Input error!");
             System.exit(1);
         }
-        return getGameModule(game);
+        return getGameModuleClass(game);
     }
 
-    private static GameModule getGameModule(Game game) {
+    private static Class<? extends GameModule> getGameModuleClass(Game game) {
         switch(game) {
             case TicTacToe:
-                return new TicTacToeModule();
+                return TicTacToeModule.class;
             default:
                 return null;
         }
@@ -57,7 +57,7 @@ class GameSolver {
         }
     }
 
-    private static void gameMenu(GameModule gameModule) {
+    private static void gameMenu(Class<? extends GameModule> gameModuleClass) {
         System.out.println("What would you like to do?\nOptions:");
         for (Action a : Action.values()) {
             System.out.println(a.toString());
@@ -77,7 +77,7 @@ class GameSolver {
                 break;
             case play:
                 //solve();
-                play(gameModule);
+                play(gameModuleClass);
                 break;
         }
     }
@@ -86,19 +86,27 @@ class GameSolver {
 
     }
 
-    private static void play(GameModule gameModule) {
+    private static void play(Class<? extends GameModule> gameModuleClass) {
         PlayerLogic[] players = {
                 new HumanPlayerLogic(),
-                new HumanPlayerLogic()
+                new ComputerPlayerLogic(gameModuleClass)
         };
+
+        GameModule gameModule = null;
+        try {
+            gameModule = gameModuleClass.newInstance();
+        } catch (Exception exception) {
+            System.out.println("Issue creating game module");
+            System.exit(1);
+        }
         int whose_turn = 0;
         Value value = Value.UNKNOWN;
         do {
             System.out.print(gameModule);
             Vector<Move> moves = gameModule.getMoves();
-            Move move = players[whose_turn].selectMove(moves);
+            Move move = players[whose_turn].selectMove(gameModule, moves);
             try {
-                gameModule.doMove(move);
+                gameModule = gameModule.doMove(move);
             } catch (InvalidMoveException inv_move) {
                 System.out.println("Invalid Move Attempted!");
                 continue;

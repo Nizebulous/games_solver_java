@@ -1,5 +1,6 @@
 package players;
 
+import games.GameModule;
 import games.Move;
 
 import java.io.BufferedReader;
@@ -11,7 +12,9 @@ import java.util.Vector;
  * Created by dhites on 10/8/14.
  */
 public class HumanPlayerLogic implements PlayerLogic {
-    public Move selectMove(Vector<Move> moves) {
+
+    @Override
+    public Move selectMove(GameModule gameModule, Vector<Move> moves) {
         int index;
         do {
             System.out.println("Possible moves:");

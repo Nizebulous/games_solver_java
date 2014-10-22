@@ -1,3 +1,4 @@
+apply plugin: 'application'
 apply plugin: 'java'
 
 repositories {
@@ -7,3 +8,9 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
+
+run {
+    standardInput = System.in
+}
+
+mainClassName = 'GameSolver'
