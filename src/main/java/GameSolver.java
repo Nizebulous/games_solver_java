@@ -18,12 +18,12 @@ class GameSolver {
     }
 
     public static void main(String[] args) {
-        System.out.println("Welcome to the Java Game Solver!");
+        System.out.println("Welcome to the Java Game Solver!\n");
         gameMenu(promptGameModule());
 	}
 
     private static Class<? extends GameModule> promptGameModule() {
-        System.out.println("Here are the available games:");
+        System.out.println("Here are the available games:\n");
         for (Game g : Game.values()) {
             System.out.println(g.toString());
         }
@@ -58,11 +58,11 @@ class GameSolver {
     }
 
     private static void gameMenu(Class<? extends GameModule> gameModuleClass) {
-        System.out.println("What would you like to do?\nOptions:");
+        System.out.println("What would you like to do?\n\nOptions:");
         for (Action a : Action.values()) {
             System.out.println(a.toString());
         }
-        System.out.print("Action :>> ");
+        System.out.print("\nAction :>> ");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         Action action = null;
         try {

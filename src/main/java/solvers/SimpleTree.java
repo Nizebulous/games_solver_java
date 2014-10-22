@@ -29,11 +29,7 @@ public class SimpleTree implements Solver {
             System.out.println("Can't create class" + gameModuleClass.toString());
             System.exit(1);
         }
-        Value value = solveHelper(gameModule);
-        System.out.println("===============Solution=============");
-        System.out.println(value);
-        System.out.println(solution.getValue(gameModule));
-        System.out.println("===============Solution=============");
+        solveHelper(gameModule);
     }
 
     private Value solveHelper(GameModule gameModule) {

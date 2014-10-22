@@ -11,5 +11,7 @@ public interface SolutionStore {
 
     public abstract Value getValue(StoreKey key);
 
+    public abstract void store();
+
 }
 

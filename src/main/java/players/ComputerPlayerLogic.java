@@ -18,15 +18,7 @@ public class ComputerPlayerLogic implements PlayerLogic {
     private Solver solver = null;
 
     public ComputerPlayerLogic(Class<? extends GameModule> gameModuleClass) {
-        Game label = null;
-        try {
-            Method getLabel = gameModuleClass.getMethod("getLabel");
-            label = (Game) getLabel.invoke(null);
-        } catch (Exception exception) {
-            System.out.println("GameModule must implement getLabel");
-            System.exit(1);
-        }
-        gameSolution = new NaiveMemStore(label);
+        gameSolution = new NaiveMemStore(gameModuleClass.toString());
         solver = new SimpleTree(gameModuleClass, gameSolution);
     }
 
@@ -45,7 +37,6 @@ public class ComputerPlayerLogic implements PlayerLogic {
         }
 
         for (Move move : moves) {
-            System.out.println(move);
             try {
                 nextPosition = gameModule.doMove(move);
             } catch (InvalidMoveException exception) {
@@ -71,7 +62,6 @@ public class ComputerPlayerLogic implements PlayerLogic {
         } else if (losses.size() > 0) {
             return losses.elementAt(0);
         } else {
-            System.out.println("wins: " + wins.size() + ", ties: " + ties.size() + ", losses: " + losses.size());
             return null;
         }
     }
