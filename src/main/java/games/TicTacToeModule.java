@@ -149,7 +149,7 @@ public class TicTacToeModule implements GameModule {
     }
 }
 
-class TicTacToeMove extends Move {
+class TicTacToeMove implements Move {
     public int x = -1;
     public int y = -1;
 

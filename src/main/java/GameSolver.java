@@ -1,6 +1,7 @@
 import games.*;
 import players.ComputerPlayerLogic;
 import players.HumanPlayerLogic;
+import players.Player;
 import players.PlayerLogic;
 
 import java.io.BufferedReader;
@@ -12,9 +13,6 @@ class GameSolver {
     private enum Action {
         solve,
         play
-    }
-    private enum Player {
-        HumanPlayer
     }
 
     public static void main(String[] args) {
